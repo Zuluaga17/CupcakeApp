@@ -18,11 +18,11 @@ class MainActivity : ComponentActivity() {
             CupcakeAppTheme {
                 CupcakeApp()
 
-                }
+
             }
         }
     }
-
+}
 
 
 
@@ -30,6 +30,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun GreetingPreview() {
     CupcakeAppTheme {
+        CupcakeApp()
 
     }
 }
