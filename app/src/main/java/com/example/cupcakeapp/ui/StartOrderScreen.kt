@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -61,10 +62,11 @@ fun StartOrderScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))
         ) {
-            quantityOptions.forEach { option ->
+            quantityOptions.forEach { item ->
                 SelectQuantityButton(
-                    labelResourceId = option.first,
-                    onClick = { onNextButtonClicked(option.second) }
+                    labelResourceId = item.first,
+                    onClick = { onNextButtonClicked(item.second) },
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }
@@ -88,13 +90,17 @@ fun SelectQuantityButton(
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun StartOrderScreenPreview() {
     CupcakeAppTheme {
         StartOrderScreen(
             quantityOptions = DataSource.quantityOptions,
-            onNextButtonClicked = { /* Preview - no action */ }
+            onNextButtonClicked = {},
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(dimensionResource(R.dimen.padding_medium))
         )
     }
 }
