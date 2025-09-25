@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.cupcakeapp.ui.theme.CupcakeAppTheme
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.dimensionResource
 import com.example.cupcakeapp.R
@@ -19,72 +20,66 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.res.stringResource
-
-
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material3.Button
 
 @Composable
 fun StartOrderScreen(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.SpaceBetween
+        modifier = modifier.padding(dimensionResource(R.dimen.padding_medium)),
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))
     ) {
-        @Composable
-        fun StartOrderScreen(
-            modifier: Modifier = Modifier
+        // Sección del encabezado con imagen y título
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small))
         ) {
-            Column(
-                modifier = modifier,
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(
-                        dimensionResource(R.dimen.padding_small)
-                    )
-                ) {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small))
-                    ) {
-                        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
 
-                        Image(
-                            painter = painterResource(R.drawable.cupcake),
-                            contentDescription = null,
-                            modifier = Modifier.width(300.dp)
-                        )
+            Image(
+                painter = painterResource(R.drawable.cupcake),
+                contentDescription = null,
+                modifier = Modifier.width(300.dp)
+            )
 
-                        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
-                        Text(
-                            text = stringResource(R.string.order_cupcakes),
-                            style = MaterialTheme.typography.headlineSmall
-                        )
-                        Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_small)))
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_medium)))
 
-                    }
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(
-                            dimensionResource(R.dimen.padding_medium)
-                        )
-                    ) {
-                        // Aquí se colocarán más elementos
-                    }
+            Text(
+                text = stringResource(R.string.order_cupcakes),
+                style = MaterialTheme.typography.headlineSmall
+            )
 
-                }
-            }
+            Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_small)))
         }
 
+        // Por ahora aquí se agregarán más cosas
     }
 }
-@Preview
+
+/**
+ * Botón reutilizable para seleccionar la cantidad de cupcakes
+ */
 @Composable
-fun StartOrderPreview() {
+fun SelectQuantityButton(
+    @StringRes labelResourceId: Int,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier.widthIn(min = 250.dp)
+    ) {
+        Text(stringResource(labelResourceId))
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun StartOrderScreenPreview() {
     CupcakeAppTheme {
         StartOrderScreen()
     }

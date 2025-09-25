@@ -10,6 +10,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import com.example.cupcakeapp.ui.StartOrderScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,14 +29,6 @@ fun CupcakeAppBar(
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Composable
 fun CupcakeApp() {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -43,8 +36,7 @@ fun CupcakeApp() {
             CupcakeAppBar()
         }
     ) { innerPadding ->
-        Greeting(
-            name = "Android",
+        StartOrderScreen(
             modifier = Modifier.padding(innerPadding)
         )
     }
