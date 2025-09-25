@@ -1,38 +1,38 @@
 package com.example.cupcakeapp.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.cupcakeapp.ui.theme.CupcakeAppTheme
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.res.dimensionResource
-import com.example.cupcakeapp.R
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import androidx.compose.material3.Text
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material3.Button
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.example.cupcakeapp.R
+import com.example.cupcakeapp.data.DataSource
+import com.example.cupcakeapp.ui.theme.CupcakeAppTheme
 
 @Composable
 fun StartOrderScreen(
+    quantityOptions: List<Pair<Int, Int>>,
+    onNextButtonClicked: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier.padding(dimensionResource(R.dimen.padding_medium)),
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small))
     ) {
-        // Sección del encabezado con imagen y título
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -56,24 +56,35 @@ fun StartOrderScreen(
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_small)))
         }
 
-        // Por ahora aquí se agregarán más cosas
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium))
+        ) {
+            quantityOptions.forEach { option ->
+                SelectQuantityButton(
+                    labelResourceId = option.first,
+                    onClick = { onNextButtonClicked(option.second) }
+                )
+            }
+        }
     }
 }
 
-/**
- * Botón reutilizable para seleccionar la cantidad de cupcakes
- */
 @Composable
 fun SelectQuantityButton(
-    @StringRes labelResourceId: Int,
+    labelResourceId: Int,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Button(
+    ElevatedButton(
         onClick = onClick,
-        modifier = modifier.widthIn(min = 250.dp)
+        modifier = modifier.fillMaxWidth()
     ) {
-        Text(stringResource(labelResourceId))
+        Text(
+            text = stringResource(labelResourceId),
+            style = MaterialTheme.typography.bodyLarge
+        )
     }
 }
 
@@ -81,6 +92,9 @@ fun SelectQuantityButton(
 @Composable
 fun StartOrderScreenPreview() {
     CupcakeAppTheme {
-        StartOrderScreen()
+        StartOrderScreen(
+            quantityOptions = DataSource.quantityOptions,
+            onNextButtonClicked = { /* Preview - no action */ }
+        )
     }
 }

@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import com.example.cupcakeapp.ui.StartOrderScreen
+import com.example.cupcakeapp.data.DataSource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,6 +38,11 @@ fun CupcakeApp() {
         }
     ) { innerPadding ->
         StartOrderScreen(
+            quantityOptions = DataSource.quantityOptions,
+            onNextButtonClicked = { quantity ->
+                // TODO: Navegar a la siguiente pantalla con la cantidad seleccionada
+                println("Selected quantity: $quantity cupcakes")
+            },
             modifier = Modifier.padding(innerPadding)
         )
     }
