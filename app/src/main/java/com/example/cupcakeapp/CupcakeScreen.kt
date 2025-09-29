@@ -87,7 +87,6 @@ fun CupcakeApp(
                 StartOrderScreen(
                     quantityOptions = DataSource.quantityOptions,
                     onNextButtonClicked = { quantity ->
-                        // Navegar a la pantalla de selección de sabores
                         navController.navigate(CupcakeScreen.Flavor.name)
                     },
                     modifier = Modifier
@@ -96,13 +95,9 @@ fun CupcakeApp(
 
             composable(route = CupcakeScreen.Flavor.name) {
                 SelectFlavorScreen(
-                    onNextButtonClicked = {
-                        // TODO: Navegar a la siguiente pantalla
-                        println("Next button clicked in Flavor screen")
-                    },
-                    onCancelButtonClicked = {
-                        // Cancelar pedido y regresar al inicio
-                        navController.popBackStack(CupcakeScreen.Start.name, inclusive = false)
+                    options = DataSource.flavors,
+                    onSelectionChanged = { flavor ->
+                        println("Selected flavor: $flavor")
                     }
                 )
             }

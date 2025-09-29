@@ -31,7 +31,8 @@ fun StartOrderScreen(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.padding(dimensionResource(R.dimen.padding_medium)),
+        modifier = modifier
+            .padding(dimensionResource(R.dimen.padding_medium)),
         verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small))
     ) {
         Column(
@@ -89,7 +90,6 @@ fun SelectQuantityButton(
         )
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
