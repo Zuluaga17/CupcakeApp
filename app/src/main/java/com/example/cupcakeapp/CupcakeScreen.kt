@@ -13,14 +13,17 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.cupcakeapp.data.DataSource
+import com.example.cupcakeapp.ui.OrderViewModel
 import com.example.cupcakeapp.ui.SelectFlavorScreen
 import com.example.cupcakeapp.ui.StartOrderScreen
 
@@ -60,6 +63,7 @@ fun CupcakeAppBar(
 
 @Composable
 fun CupcakeApp(
+    viewModel: OrderViewModel = viewModel(),
     navController: NavHostController = rememberNavController()
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -77,6 +81,7 @@ fun CupcakeApp(
             )
         }
     ) { innerPadding ->
+        val uiState by viewModel.uiState.collectAsState()
 
         NavHost(
             navController = navController,
@@ -87,6 +92,7 @@ fun CupcakeApp(
                 StartOrderScreen(
                     quantityOptions = DataSource.quantityOptions,
                     onNextButtonClicked = { quantity ->
+                        viewModel.setQuantity(quantity)
                         navController.navigate(CupcakeScreen.Flavor.name)
                     },
                     modifier = Modifier
@@ -95,9 +101,10 @@ fun CupcakeApp(
 
             composable(route = CupcakeScreen.Flavor.name) {
                 SelectFlavorScreen(
+                    subtotal = uiState.price,
                     options = DataSource.flavors,
                     onSelectionChanged = { flavor ->
-                        println("Selected flavor: $flavor")
+                        viewModel.setFlavor(flavor)
                     }
                 )
             }

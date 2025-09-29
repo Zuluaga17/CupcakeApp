@@ -28,6 +28,7 @@ import com.example.cupcakeapp.ui.theme.CupcakeAppTheme
 
 @Composable
 fun SelectFlavorScreen(
+    subtotal: String,
     options: List<String>,
     onSelectionChanged: (String) -> Unit = {},
     modifier: Modifier = Modifier
@@ -79,6 +80,15 @@ fun SelectFlavorScreen(
                 }
             }
         }
+
+        // Mostrar subtotal
+        Text(
+            text = "Subtotal: $subtotal",
+            style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(top = dimensionResource(R.dimen.padding_medium))
+        )
     }
 }
 
@@ -87,6 +97,7 @@ fun SelectFlavorScreen(
 fun SelectFlavorScreenPreview() {
     CupcakeAppTheme {
         SelectFlavorScreen(
+            subtotal = "$12.00",
             options = DataSource.flavors
         )
     }
