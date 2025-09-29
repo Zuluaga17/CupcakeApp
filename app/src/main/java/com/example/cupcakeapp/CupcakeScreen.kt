@@ -21,6 +21,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.cupcakeapp.data.DataSource
+import com.example.cupcakeapp.ui.SelectFlavorScreen
 import com.example.cupcakeapp.ui.StartOrderScreen
 
 enum class CupcakeScreen(val title: String) {
@@ -86,16 +87,24 @@ fun CupcakeApp(
                 StartOrderScreen(
                     quantityOptions = DataSource.quantityOptions,
                     onNextButtonClicked = { quantity ->
-                        // TODO: Navegar a la siguiente pantalla con la cantidad seleccionada
-                        println("Selected quantity: $quantity cupcakes")
+                        // Navegar a la pantalla de selección de sabores
+                        navController.navigate(CupcakeScreen.Flavor.name)
                     },
                     modifier = Modifier
                 )
             }
 
             composable(route = CupcakeScreen.Flavor.name) {
-                // TODO: Implementar pantalla de selección de sabores
-                Text("Flavor Screen - Coming Soon")
+                SelectFlavorScreen(
+                    onNextButtonClicked = {
+                        // TODO: Navegar a la siguiente pantalla
+                        println("Next button clicked in Flavor screen")
+                    },
+                    onCancelButtonClicked = {
+                        // Cancelar pedido y regresar al inicio
+                        navController.popBackStack(CupcakeScreen.Start.name, inclusive = false)
+                    }
+                )
             }
 
             composable(route = CupcakeScreen.Pickup.name) {
