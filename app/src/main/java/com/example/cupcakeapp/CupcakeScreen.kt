@@ -25,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.cupcakeapp.data.DataSource
 import com.example.cupcakeapp.ui.OrderViewModel
 import com.example.cupcakeapp.ui.SelectFlavorScreen
+import com.example.cupcakeapp.ui.SelectPickupScreen
 import com.example.cupcakeapp.ui.StartOrderScreen
 
 enum class CupcakeScreen(val title: String) {
@@ -105,13 +106,19 @@ fun CupcakeApp(
                     options = DataSource.flavors,
                     onSelectionChanged = { flavor ->
                         viewModel.setFlavor(flavor)
+                        navController.navigate(CupcakeScreen.Pickup.name)
                     }
                 )
             }
 
             composable(route = CupcakeScreen.Pickup.name) {
-                // TODO: Implementar pantalla de selección de fecha
-                Text("Pickup Screen - Coming Soon")
+                SelectPickupScreen(
+                    subtotal = uiState.price,
+                    options = uiState.pickupOptions,
+                    onSelectionChanged = { date ->
+                        viewModel.setDate(date)
+                    }
+                )
             }
 
             composable(route = CupcakeScreen.Summary.name) {
